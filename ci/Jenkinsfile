@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-        yamlFile 'ci/kubernetes.yaml'
+            yamlFile 'ci/kubernetes.yaml'
         }
     }
     options {
