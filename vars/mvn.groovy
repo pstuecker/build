@@ -22,7 +22,7 @@ def call(Map args) {
 
     if(args.dependencies)
     {
-        defines += "-DoutputFile=$WORKSPACE/${args.dependencies} "
+        defines += "-DappendOutput=true -DoutputFile=$WORKSPACE/${args.dependencies} "
         goal += ' dependency:list'
     }
 
