@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    options {
+        timeout(time: 5, unit: 'MINUTES')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                archiveArtifacts artifacts: 'utils/licenses.html', followSymlinks: false
+            }
+        }
+    }
+}
