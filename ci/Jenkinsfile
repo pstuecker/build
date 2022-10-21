@@ -13,19 +13,14 @@ pipeline {
             steps {
                 container('jnlp') {
                     sh 'wget -O utils/DEPENDENCIES.set https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'
-                    sh 'wget -O utils/DEPENDENCIES.browser https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'
-                    sh 'wget -O utils/DEPENDENCIES.model https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'
-                    sh 'wget -O utils/DEPENDENCIES.toolboxmodel https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'  
+                    sh 'wget -O utils/DEPENDENCIES.browser https://ci.eclipse.org/set/job/browser/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'
+                    sh 'wget -O utils/DEPENDENCIES.model https://ci.eclipse.org/set/job/Model/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'
+                    sh 'wget -O utils/DEPENDENCIES.toolboxmodel https://ci.eclipse.org/set/job/toolboxmodel/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/DEPENDENCIES || true'  
                 }
             }
         }
         stage('Deploy Snapshot')
         {
-            when {
-                anyOf {
-                    branch 'main'
-                }
-            }
             steps {
                 container('jnlp') {
                     sshagent (['projects-storage.eclipse.org-bot-ssh']) {
