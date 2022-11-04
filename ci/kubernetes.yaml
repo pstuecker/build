@@ -14,7 +14,7 @@ spec:
         memory: "2Gi"
         cpu: "1"      
   - name: python
-    image: python:3.11
+    image: openkbs/jre-mvn-py3:v1.3.1
     command:
     - cat
     tty: true
