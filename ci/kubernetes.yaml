@@ -2,18 +2,15 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: jnlp
-    volumeMounts:
-    - name: volume-known-hosts
-      mountPath: /home/jenkins/.ssh        
+  - name: python
+    image: python:3.11
+    command:
+    - cat
+    tty: true
     resources:
       limits:
         memory: "2Gi"
         cpu: "1"
       requests:
         memory: "2Gi"
-        cpu: "1"      
-  volumes:
-  - name: volume-known-hosts
-    configMap:
-      name: known-hosts           
+        cpu: "1"  
