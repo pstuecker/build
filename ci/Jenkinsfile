@@ -17,19 +17,19 @@ pipeline {
                         sh "wget -O dash.jar 'https://repo.eclipse.org/service/local/artifact/maven/redirect?r=dash-licenses&g=org.eclipse.dash&a=org.eclipse.dash.licenses&v=LATEST'"
                         
                         // SET
-                        sh 'wget -O https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip || true'
+                        sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
                         sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.set"
                         
                         // Model
-                        sh 'wget -O https://ci.eclipse.org/set/job/Model/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip || true'
+                        sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/Model/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
                         sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.model"
                         
                         // Toolboxmodel
-                        sh 'wget -O https://ci.eclipse.org/set/job/toolboxmodel/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip || true'
+                        sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/toolboxmodel/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
                         sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.toolboxmodel"
 
                         // Browser
-                        sh 'wget -O https://ci.eclipse.org/set/job/browser/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip || true'
+                        sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/browser/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
                         sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.browser"
                     }
                 }
