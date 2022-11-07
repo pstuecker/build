@@ -7,7 +7,7 @@ spec:
     - name: volume-known-hosts
       mountPath: /home/jenkins/.ssh 
   - name: python
-    image: openkbs/jre-mvn-py3:v1.3.1
+    image: openkbs/jdk11-mvn-py3:v1.2.1
     command:
     - cat
     tty: true
