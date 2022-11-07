@@ -18,19 +18,19 @@ pipeline {
                         
                         // SET
                         sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/SET/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
-                        sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.set"
+                        sh "python3 process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.set"
                         
                         // Model
                         sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/Model/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
-                        sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.model"
+                        sh "python3 process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.model"
                         
                         // Toolboxmodel
                         sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/toolboxmodel/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
-                        sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.toolboxmodel"
+                        sh "python3 process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.toolboxmodel"
 
                         // Browser
                         sh "wget -O dependencies.zip 'https://ci.eclipse.org/set/job/browser/job/feature%252Fdash-license/lastSuccessfulBuild/artifact/dependencies.zip' || true"
-                        sh "python process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.browser"
+                        sh "python3 process.py dependencies.zip $WORKSPACE/utils/DEPENDENCIES.browser"
                     }
                 }
             }
