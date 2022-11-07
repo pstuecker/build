@@ -17,18 +17,16 @@ if len(sys.argv) < 3:
 
 with zipfile.ZipFile(sys.argv[1], 'r') as zf:
     for filename in zf.namelist():
+        print("Processing", filename)
+
         data = zf.read(filename)
         # npm lock files must be called exactly package-lock.json for Dash to process
-        if filename.endswith('.json'):
-            with open('package-lock.json', 'wb') as f:
-                f.write(data)
-                subprocess.call(['java', '-jar', 'dash.jar', '-summary' 'DEPENDENCIES', 'package-lock.json'])
-            os.remove("package-lock.json")
-        else:
-            with open('file.deps', 'wb') as f:
-                f.write(data)
-            subprocess.call(['java', '-Djava.net.useSystemProxies=true', '-jar', 'dash.jar', '-summary', 'DEPENDENCIES', 'file.deps'])
-            os.remove("file.deps")
+        fname = 'package-lock.json' if filename.endswith('.json') else filename
+        with open(fname, 'wb') as f:
+            f.write(data)
+        args = 'java -Djava.net.useSystemProxies=true -jar dash.jar -summary DEPENDENCIES ' + fname
+        subprocess.run(args, shell=True, check=False)
+        os.remove(fname)
         
         # append to outfile 
         with open('DEPENDENCIES', 'r') as infile:
