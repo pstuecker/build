@@ -5,13 +5,10 @@
  * And archives the results as a build artifact 'dependencies.zip'
  */
 def call() {
-    sh "rm -rf $WORKSPACE/__dependencies"
-    sh "mkdir -p $WORKSPACE/__dependencies"
-    sh "find $WORKSPACE -name 'package-lock.json' -exec cp {} __dependencies \;"
-    sh "find $WORKSPACE -name '*.deps' -exec cp {} __dependencies \;"
-
     dir("$WORKSPACE/__dependencies")
     {
+        sh 'find .. -name \'package-lock.json\' | awk \'{ f = substr($0, 4); gsub("/", "_", f); print $0 " " f}\' | xargs -L1 cp'
+        sh "find .. -name '*.deps' -exec cp {} . \;"
         sh 'jar -cfM dependencies.zip ./*'
         archiveArtifacts artifacts: 'dependencies.zip'
     }
