@@ -5,7 +5,7 @@ pipeline {
         }
     }
     triggers {
-        upstream threshold: 'UNSTABLE', upstreamProjects: 'SET/main, model/main, toolboxmodel/main, browser/main'
+        upstream threshold: hudson.model.Result.UNSTABLE, upstreamProjects: 'SET/main, model/main, toolboxmodel/main, browser/main'
     }
 
 
