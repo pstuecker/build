@@ -4,6 +4,11 @@ pipeline {
             yamlFile 'ci/kubernetes.yaml'
         }
     }
+    triggers {
+        upstream threshold: 'UNSTABLE', upstreamProjects: 'SET/main, model/main, toolboxmodel/main, browser/main'
+    }
+
+
     options {
         timeout(time: 5, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '3'))
