@@ -20,6 +20,10 @@ def processDependency(dep):
     result = re.search(r"p2.eclipse.plugin:maven\.([a-z-.]+)\.artifact\.([a-z-.]+):eclipse-plugin:([0-9\.]+):system", dep)
     if not result:
         return dep 
+    elif result.group(1) == 'org.apache.xmlgraphics' and result.group(2) == 'fop':
+        # Special case for fop: There is no third component in the version, however maven generates one
+        result = re.search(r"p2.eclipse.plugin:maven\.([a-z-.]+)\.artifact\.([a-z-.]+):eclipse-plugin:([0-9\.]+)\.0:system", dep)
+        return f"{result.group(1)}:{result.group(2)}:{result.group(3)}:compile"
     else:
         return f"{result.group(1)}:{result.group(2)}:{result.group(3)}:compile"
 
