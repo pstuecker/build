@@ -8,14 +8,14 @@ def call(Map args) {
         sshagent (['projects-storage.eclipse.org-bot-ssh']) {
             sh (
                 """#!/bin/bash
-                    readarray -t snapshot < <(ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org ls /home/data/httpd/download.eclipse.org/set/snapshots/bin/${args.repo}/feature)
+                    readarray -t snapshots < <(ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org ls /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/feature)
                     readarray -t branches < <(git branch| sed 's/[ *]\\+//g')
                     for snapshot in \$snapshots
                     do 
                         snapshotName=\$(echo \$snapshot | sed 's/\\///g')
                         if [[ ! \${branches[@]} =~ feature/\${snapshotName} ]]
                         then
-                            ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/snapshots/bin/${args.repo}/\${snapshot}
+                            ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/\${snapshot}
                         fi
                     done
                 """
