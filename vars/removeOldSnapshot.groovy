@@ -9,7 +9,7 @@ def call(Map args) {
             sh '''#!/bin/bash
                 readarray -t snapshot < <(ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org ls /home/data/httpd/download.eclipse.org/set/snapshots/bin/${args.repo}/feature)
                 readarray -t branches < <(git branch)
-                for i in \$[!branches[@]}
+                for i in \$[!branches[@]]
                 do 
                     copy=\$(echo \${branches[\$i]} | sed 's/[ *]\\+//g')
                     branches[\$i]=\$copy
@@ -23,4 +23,6 @@ def call(Map args) {
                     fi
                 done
             '''
+        }
+    }
 }
