@@ -11,7 +11,7 @@ def call(Map args) {
                     readarray -t snapshots < <(ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org ls /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/feature)
                     readarray -t branches < <(git branch| sed 's/[ *]\\+//g')
                     declare -p branches
-                    for snapshot in \$snapshots
+                    for snapshot in \${snapshots[@]}
                     do 
                         snapshotName=\$(echo \$snapshot | sed 's/\\///g')
                         echo \$snapshot
