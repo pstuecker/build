@@ -14,7 +14,7 @@ def call(Map args) {
                     for snapshot in \$snapshots
                     do 
                         snapshotName=\$(echo \$snapshot | sed 's/\\///g')
-                        echo $snapshot
+                        echo \$snapshot
                         if [[ ! \${branches[@]} =~ feature/\${snapshotName} ]]
                         then
                             echo Delete
