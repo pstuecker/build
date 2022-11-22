@@ -10,15 +10,12 @@ def call(Map args) {
                 """#!/bin/bash
                     readarray -t snapshots < <(ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org ls /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/feature)
                     readarray -t branches < <(git branch| sed 's/[ *]\\+//g')
-                    declare -p branches
                     for snapshot in \${snapshots[@]}
-                    do 
-                        snapshotName=\$(echo \$snapshot | sed 's/\\///g')
-                        echo \$snapshot
-                        if [[ ! \${branches[@]} =~ feature/\${snapshotName} ]]
+                    do
+                        if [[ ! \${branches[@]} =~ feature/\${snapshot} ]]
                         then
                             echo Delete
-                            ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/\${snapshot}
+                            ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/snapshots/${args.repo}/feature/\${snapshot}
                         fi
                     done
                 """
