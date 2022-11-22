@@ -12,7 +12,7 @@ def call(Map args) {
                     readarray -t branches < <(git branch| sed 's/[ *]\\+//g')
                     for snapshot in \$snapshots
                     do 
-                        snapshotName=\$(echo \$snapshot | sed 's/\\///g'
+                        snapshotName=\$(echo \$snapshot | sed 's/\\///g')
                         if [[ ! \${branches[@]} =~ feature/\${snapshotName} ]]
                         then
                             ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/snapshots/bin/${args.repo}/\${snapshot}
