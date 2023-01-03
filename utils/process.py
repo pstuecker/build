@@ -16,7 +16,7 @@ if len(sys.argv) < 3:
     print("Usage: process.py in.zip outfile")
     sys.exit(-1)
 
-def processDependency(dep):
+def process_dependency(dep):
     result = re.search(r"p2.eclipse.plugin:maven\.([a-z-.]+)\.artifact\.([a-z-.]+):eclipse-plugin:([0-9\.]+):system", dep)
     if not result:
         return dep 
@@ -32,7 +32,7 @@ with zipfile.ZipFile(sys.argv[1], 'r') as zf:
         print("Processing", filename)
 
         data = zf.read(filename)
-        data = "\n".join(map(processDependency, data.decode("utf-8").splitlines()))
+        data = "\n".join(map(process_dependency, data.decode("utf-8").splitlines()))
 
         # npm lock files must be called exactly package-lock.json for Dash to process
         fname = 'package-lock.json' if filename.endswith('.json') else filename

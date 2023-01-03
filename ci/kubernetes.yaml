@@ -8,6 +8,11 @@ spec:
       mountPath: /home/jenkins/.ssh 
   - name: python
     image: openkbs/jdk11-mvn-py3:v1.2.1
+    volumeMounts:
+    - name: local
+      mountPath: /home/developer/.local
+    - name: cache
+      mountPath: /home/developer/.cache
     command:
     - cat
     tty: true
@@ -25,6 +30,9 @@ spec:
   - name: volume-known-hosts
     configMap:
       name: known-hosts    
-  - name: cache
+  - name: local
     emptyDir:
       sizeLimit: 500Mi 
+  - name: cache
+    emptyDir:
+      sizeLimit: 500Mi    
