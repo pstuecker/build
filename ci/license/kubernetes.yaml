@@ -16,9 +16,6 @@ spec:
     command:
     - cat
     tty: true
-    volumeMounts:
-    - name: cache
-      mountPath: /home/developer/.cache
     resources:
       limits:
         memory: "2Gi"
