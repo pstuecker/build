@@ -5,5 +5,5 @@
  * @param file Output file
  */
 def call(Map args) {
-    sh "curl -L -o '${args.file}' ${args.url}"
+    sh "curl -L -o '${args.file}' '${args.url}'"
 }
