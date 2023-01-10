@@ -14,13 +14,24 @@ if len(sys.argv) < 3:
     print("Usage: gitlabCommit.py projectId remotefile localfile")
     sys.exit(-1)
 
-
-gl = gitlab.Gitlab(url='https://gitlab.eclipse.org', private_token=os.getenv('GITLAB_TOKEN'))
 content = open(sys.argv[3]).read()
-
 # Refuse to commit empty files
 if len(content) < 10: 
   sys.exit(-1)
+
+gl = gitlab.Gitlab(url='https://gitlab.eclipse.org', private_token=os.getenv('GITLAB_TOKEN'))
+project = gl.projects.get(int(sys.argv[1]))
+
+oldFile = project.files.get(sys.argv[2], "main")
+if oldFile is not None:
+    oldContent = oldFile.decode().decode("utf-8")
+    if oldContent == content:
+        print("New content matches existing file. Skipping commit.")
+        sys.exit(0)
+    else: 
+        print("New content does not match existing file. Updating...")
+else:
+    print("File does not exist. Creating...")
 
 data = {
     'branch': 'main',
@@ -34,5 +45,4 @@ data = {
     ]
 }
 
-project = gl.projects.get(int(sys.argv[1]))
 commit = project.commits.create(data)
