@@ -24,8 +24,7 @@ def call() {
         //IMPROVE: with next version of tycho we automatic generate checksums and then this warning will fix
         // see: https://github.com/eclipse-tycho/tycho/pull/2008
         excludeMessage('No digest algorithm is available to verify download of'),
-        excludeMessage('The digest algorithms (md5) used to verify')
-
+        excludeMessage('The digest algorithms (md5) used to verify'),
         //we can for now this warning ignore.
         //See https://github.com/eclipse-tycho/tycho/discussions/1567#discussioncomment-4250961
         excludeMessage('Failed creating shared configuration url for null')],
