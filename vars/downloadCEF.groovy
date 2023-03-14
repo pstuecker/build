@@ -19,6 +19,8 @@ def call(Map args) {
 
     downloadFile file: 'cef.tar.bz2', url: "https://cef-builds.spotifycdn.com/${version}.tar.bz2"
     sh "tar xf cef.tar.bz2 ${fileargs} --strip-components 2"
+    // Also extract license
+    sh "tar xf cef.tar.bz2 ${version}/LICENSE.txt --strip-components 1"
     sh 'rm -rf cef.tar.bz2'
 }
 
