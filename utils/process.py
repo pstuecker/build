@@ -27,6 +27,12 @@ def process_dependency(dep):
     else:
         return f"{result.group(1)}:{result.group(2)}:{result.group(3)}:compile"
 
+def process_output_line(line):
+    return re.sub(r"(org.eclipse.set.*)/(\d+\.\d+\.\d+)\.[0-9]+,", r"\1/\2,", line)
+
+def process_output(bytes): 
+    return "\n".join(map(process_output_line, bytes.decode('utf-8').splitlines()))
+
 with zipfile.ZipFile(sys.argv[1], 'r') as zf:
     for filename in zf.namelist():
         print("Processing", filename)
@@ -45,5 +51,5 @@ with zipfile.ZipFile(sys.argv[1], 'r') as zf:
         # append to outfile 
         with open('DEPENDENCIES', 'r') as infile:
             with open(sys.argv[2], 'a+') as outfile:
-                outfile.write(infile.read())
+                outfile.write(process_output(infile.read()))
         os.remove("DEPENDENCIES")
