@@ -27,11 +27,8 @@ def process_dependency(dep):
     else:
         return f"{result.group(1)}:{result.group(2)}:{result.group(3)}:compile"
 
-def process_output_line(line):
-    return re.sub(r"(org.eclipse.set.*)/(\d+\.\d+\.\d+)\.[0-9]+,", r"\1/\2,", line)
-
 def process_output(output): 
-    return "\n".join(map(process_output_line, output.splitlines()))
+    return re.sub(r"(org.eclipse.set.*)/(\d+\.\d+\.\d+)\.[0-9]+,", r"\1/\2,", output)
 
 with zipfile.ZipFile(sys.argv[1], 'r') as zf:
     for filename in zf.namelist():
