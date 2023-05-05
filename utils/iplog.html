@@ -14,8 +14,6 @@
     async function fetchData(project) {
         const response = await fetch(`DEPENDENCIES.${project}`)
         const text = await response.text()
-
-        console.log(text.length)
         return text.split("\n").map(entry => entry.split(",").map(d => d.trim()))
     }
 
