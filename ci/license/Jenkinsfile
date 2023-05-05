@@ -45,6 +45,8 @@ pipeline {
                         downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/browser/job/${BRANCH_NAME}/lastSuccessfulBuild/artifact/dependencies.zip"
                         sh 'python3 ../utils/process.py dependencies.zip DEPENDENCIES.browser'
                         sh 'python3 ../utils/gitlabCommit.py 2764 DEPENDENCIES DEPENDENCIES.browser'
+
+                        sh 'cp DEPENDENCIES.* ../utils'
                     }
                 }
             }
@@ -56,7 +58,7 @@ pipeline {
                     sshagent (['projects-storage.eclipse.org-bot-ssh']) {
                         sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/nightly/${BRANCH_NAME}/utils/iplog.html"
                         sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/set/nightly/${BRANCH_NAME}/utils/"
-                        sh "scp -o BatchMode=yes -r utils/iplog.html genie.set@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/set/nightly/${BRANCH_NAME}/utils/iplog.html"
+                        sh "scp -o BatchMode=yes -r utils/* genie.set@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/set/nightly/${BRANCH_NAME}/utils/"
                     }
                 }
             }

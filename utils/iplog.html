@@ -11,13 +11,14 @@
         }
     }
 
-    async function fetchData(project, branch) {
-        const response = await fetch(`https://gitlab.eclipse.org/eclipse/set/${project}/-/blob/${branch}/DEPENDENCIES`)
+    async function fetchData(project) {
+        const response = await fetch(`DEPENDENCIES.${project}`)
         const text = await response.text()
 
         console.log(text.length)
         return text.split("\n").map(entry => entry.split(",").map(d => d.trim()))
     }
+
 
     function updateTable(project, entries) {
         for (const data of entries) {
