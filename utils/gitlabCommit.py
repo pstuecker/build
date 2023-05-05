@@ -22,7 +22,7 @@ if len(content) < 10:
 gl = gitlab.Gitlab(url='https://gitlab.eclipse.org', private_token=os.getenv('GITLAB_TOKEN'))
 project = gl.projects.get(int(sys.argv[1]))
 
-oldFile = project.files.get(sys.argv[2], "main")
+oldFile = project.files.get(sys.argv[2], os.getenv('BRANCH_NAME'))
 if oldFile is not None:
     oldContent = oldFile.decode().decode("utf-8")
     if oldContent == content:
@@ -34,7 +34,7 @@ else:
     print("File does not exist. Creating...")
 
 data = {
-    'branch': 'main',
+    'branch': os.getenv('BRANCH_NAME'),
     'commit_message': 'Update dependency information',
     'actions': [
         {
