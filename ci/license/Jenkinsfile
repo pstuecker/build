@@ -1,3 +1,6 @@
+def BRANCH_NAME_JOB = BRANCH_NAME.replace('/', '%2F')
+def BRANCH_NAME_URL = BRANCH_NAME.replace('/', '%252F')
+
 pipeline {
     agent {
         kubernetes {
@@ -5,7 +8,7 @@ pipeline {
         }
     }
     triggers {
-        upstream threshold: hudson.model.Result.UNSTABLE, upstreamProjects: 'SET/main, model/main, toolboxmodel/main, browser/main'
+        upstream threshold: hudson.model.Result.UNSTABLE, upstreamProjects: "SET/${BRANCH_NAME_JOB}, model/${BRANCH_NAME_JOB}, toolboxmodel/${BRANCH_NAME_JOB}, browser/${BRANCH_NAME_JOB}"
     }
 
 
@@ -27,22 +30,22 @@ pipeline {
                         sh 'pip3 install python-gitlab'
 
                         // SET
-                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/SET/job/${BRANCH_NAME}/lastSuccessfulBuild/artifact/dependencies.zip"
+                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/SET/job/${BRANCH_NAME_URL}/lastSuccessfulBuild/artifact/dependencies.zip"
                         sh 'python3 ../utils/process.py dependencies.zip DEPENDENCIES.set'
                         sh 'python3 ../utils/gitlabCommit.py 27 DEPENDENCIES DEPENDENCIES.set'
                         
                         // Model
-                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/Model/job/${BRANCH_NAME}/lastSuccessfulBuild/artifact/dependencies.zip"
+                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/Model/job/${BRANCH_NAME_URL}/lastSuccessfulBuild/artifact/dependencies.zip"
                         sh 'python3 ../utils/process.py dependencies.zip DEPENDENCIES.model'
                         sh 'python3 ../utils/gitlabCommit.py 2762 DEPENDENCIES DEPENDENCIES.model'
                         
                         // Toolboxmodel
-                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/toolboxmodel/job/${BRANCH_NAME}/lastSuccessfulBuild/artifact/dependencies.zip"
+                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/toolboxmodel/job/${BRANCH_NAME_URL}/lastSuccessfulBuild/artifact/dependencies.zip"
                         sh 'python3 ../utils/process.py dependencies.zip DEPENDENCIES.toolboxmodel'
                         sh 'python3 ../utils/gitlabCommit.py 2763 DEPENDENCIES DEPENDENCIES.toolboxmodel'
 
                         // Browser
-                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/browser/job/${BRANCH_NAME}/lastSuccessfulBuild/artifact/dependencies.zip"
+                        downloadFile file: 'dependencies.zip', url: "https://ci.eclipse.org/set/job/browser/job/${BRANCH_NAME_URL}/lastSuccessfulBuild/artifact/dependencies.zip"
                         sh 'python3 ../utils/process.py dependencies.zip DEPENDENCIES.browser'
                         sh 'python3 ../utils/gitlabCommit.py 2764 DEPENDENCIES DEPENDENCIES.browser'
 
