@@ -11,38 +11,19 @@ pipeline {
   }
 
   parameters {
-    choice choices: ['set', 'model', 'toolboxmodel', 'browser', 'browser-cef'], name: 'component'
-    string description: 'Release version (for example: 1.1.0-rc7)', name: 'tagName', trim: true
+    string description: 'Build to remove' name: 'name', trim: true
   }
 
 
   stages {
-    stage('Promote P2') {
+    stage('Remove file') {
         steps {
             container('jnlp') {
                 sshagent (['projects-storage.eclipse.org-bot-ssh']) {
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/nightly/p2/${params.tagName}/${params.component}"
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/set/nightly/p2/${params.tagName}/${params.component}"
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org cp -r /home/data/httpd/download.eclipse.org/set/snapshots/${params.component}/release/${params.tagName} /home/data/httpd/download.eclipse.org/set/nightly/p2/${params.tagName}/${params.component}"
-                }
-            }
-        }
-
-    }
-    stage('Promote Binaries') {
-        when {
-            expression { return component == 'set' }
-        }
-        steps {
-            container('jnlp') {
-                sshagent (['projects-storage.eclipse.org-bot-ssh']) {
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/nightly/bin/${params.tagName}"
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/set/nightly/bin/${params.tagName}"
-                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org cp -r /home/data/httpd/download.eclipse.org/set/snapshots/bin/set/${params.tagName} /home/data/httpd/download.eclipse.org/set/nightly/bin/${params.tagName}"
+                    sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/set/nightly/${params.name}"
                 }
             }
         }
     }
-
   }
 }
