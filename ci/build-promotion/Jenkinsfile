@@ -12,11 +12,15 @@ pipeline {
 
   parameters {
     string description: 'Build to remove' name: 'name', trim: true
+    booleanParam description: 'only run if this is true', name: 'doRun'
   }
 
 
   stages {
-    stage('Remove file') {
+    stage('Remove build') {
+        when {
+          expression { return params.doRun }
+        }
         steps {
             container('jnlp') {
                 sshagent (['projects-storage.eclipse.org-bot-ssh']) {
