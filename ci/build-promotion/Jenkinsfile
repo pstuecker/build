@@ -11,7 +11,7 @@ pipeline {
   }
 
   parameters {
-    string description: 'Build to remove' name: 'name', trim: true
+    string description: 'Build to remove', name: 'name', trim: true
     booleanParam description: 'only run if this is true', name: 'doRun'
   }
 
