@@ -17,7 +17,7 @@ if len(sys.argv) < 3:
     sys.exit(-1)
 
 def process_dependency(dep):
-    result = re.search(r"p2.eclipse.plugin:maven\.([a-z-.]+)\.artifact\.([a-z-.]+):eclipse-plugin:([0-9\.]+):system", dep)
+    result = re.search(r"p2.eclipse.plugin:maven\.([a-z0-9-.]+)\.artifact\.([a-z0-9-.]+):eclipse-plugin:([0-9\.]+):system", dep)
     if not result:
         return dep 
     elif result.group(1) == 'org.apache.xmlgraphics' and result.group(2) == 'fop':
