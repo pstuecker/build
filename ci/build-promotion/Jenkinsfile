@@ -11,15 +11,31 @@ pipeline {
   }
 
   parameters {
-    string description: 'Build to remove', name: 'name', trim: true
-    booleanParam description: 'only run if this is true', name: 'doRun'
+    string description: 'Nightly build to remove/copy', name: 'name', trim: true
+    string description: 'target location (directory) for copy. Only used for copy', name: 'targetdir', trim: true
+    booleanParam description: 'only remove if this is true', name: 'remove'
+    booleanParam description: 'only copy if this is true', name: 'copy'
   }
 
 
   stages {
+    stage('Copy build') {
+        when {
+          expression { return params.copy }
+        }
+        steps {
+            container('jnlp') {
+                sshagent (['projects-storage.eclipse.org-bot-ssh']) {
+                  sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/set/${params.targetdir}"
+                  sh "ssh -o BatchMode=yes genie.set@projects-storage.eclipse.org cp -r /home/data/httpd/download.eclipse.org/set/nightly/${params.name} /home/data/httpd/download.eclipse.org/set/${params.targetdir}"
+                }
+            }
+        }
+    }
+
     stage('Remove build') {
         when {
-          expression { return params.doRun }
+          expression { return params.remove }
         }
         steps {
             container('jnlp') {
