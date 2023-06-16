@@ -28,7 +28,8 @@ def call() {
         //we can for now this warning ignore.
         //See https://github.com/eclipse-tycho/tycho/discussions/1567#discussioncomment-4250961
         excludeMessage('Failed creating shared configuration url for null'),
-        excludeMessage('The following referenced plugins has missing sources')],
+        excludeMessage('The following referenced plugins has missing sources'),
+        excludeMessage('The following referenced features has missing sources')],
         qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]],
         tools: [java(), mavenConsole(), checkStyle()]
 }
