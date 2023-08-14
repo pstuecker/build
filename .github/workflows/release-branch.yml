@@ -31,6 +31,9 @@ jobs:
         echo "This workflow should not be triggered on a branch other than main"
         exit 1
         
+    - name: Validate version format
+      run: echo '${{ inputs.version }}' | grep -P '^\d+\.\d+$'
+      
     - uses: actions/checkout@v3
 
     - name: Bump versions
