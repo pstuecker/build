@@ -1,0 +1,30 @@
+name: 'Setup Java'
+description: 'Adds Java and Maven preconfigured for Eclipse SET'
+inputs:
+  settings:
+    description: 'Path to Maven settings.xml to copy. Only copied if the file exists.'
+    required: false
+    default: '.github/settings.xml'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: temurin
+        server-id: set-github
+        cache: maven
+
+    - name: Setup Maven
+      uses: stCarolas/setup-maven@07fbbe97d97ef44336b7382563d66743297e442f # v4.5
+      with:
+        maven-version: 3.9.3
+    
+    - name: Copy repository local maven settings
+      shell: bash
+      run: |
+        if test -f "${{ inputs.settings }}"; then
+          cp ${{ inputs.settings }} ~/.m2/settings.xml
+        fi
