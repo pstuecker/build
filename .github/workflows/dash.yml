@@ -49,7 +49,7 @@ jobs:
 
       - name: Set review request
         run: echo "request-review=1" >> $GITHUB_ENV
-        if: (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/request-license-review')) || env.isDependabotPR
+        if: (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/request-license-review'))
 
       - name: Set license check
         run: echo "license-check=1" >> $GITHUB_ENV
@@ -165,7 +165,7 @@ jobs:
                   commentBody += "\n### :rocket: Requested reviews:\n"
                   const lines = reviews.split('\n')
                   for (const line of lines) {
-                    commentBody += `- line\n`
+                    commentBody += `- ${line}\n`
                   }
                 }
               } else {
