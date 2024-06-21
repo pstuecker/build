@@ -56,4 +56,9 @@ runs:
       shell: bash
       run: |
         ls -avl
+        test -s DEPENDENCIES && echo "???"
+        touch empty
+        test -s empty && echo "???"
+        echo full > full
+        test -s full && echo "!!!"
         test -s DEPENDENCIES && exit 1
