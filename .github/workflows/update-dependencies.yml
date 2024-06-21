@@ -18,7 +18,7 @@ jobs:
         token: ${{ secrets.GH_BOT_TOKEN }}
 
     - name: Update DEPENDENCIES
-      uses: eclipse-set/build/.github/actions/check-dependencies@main
+      uses: pstuecker/build/.github/actions/check-dependencies@self-main
      
     - name: Push to Github
       run: |
