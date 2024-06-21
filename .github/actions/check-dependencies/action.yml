@@ -50,7 +50,7 @@ runs:
           echo "build-succeeded=0" >> $GITHUB_OUTPUT
         fi
       env:
-        GITHUB_TOKEN: token # ${{ github.token }}
+        GITHUB_TOKEN: ${{ github.token }}
       
     - name: Check if dependencies were processed correctly
       shell: bash
