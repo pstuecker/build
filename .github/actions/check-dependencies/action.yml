@@ -54,4 +54,6 @@ runs:
       
     - name: Check if dependencies were processed correctly
       shell: bash
-      run: test -s DEPENDENCIES && exit 1
+      run: |
+        ls -avl
+        test -s DEPENDENCIES && exit 1
